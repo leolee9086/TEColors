@@ -2,13 +2,13 @@
   "name": "TEColors",
   "author": "椽承设计",
   "url": "https://github.com/leolee9086/TEBlockwidthHandler",
-  "version": "0.0.5",
+  "version": "0.0.1",
   "displayName": {
     "default": "TEColors",
     "zh_CN": "TE颜色选择器"
   },
   "description": {
-    "default": "",
+    "default": "Used for quickly adjusting the text color and background color of blocks, as well as simple color management and other functions.",
     "zh_CN": "用于快速调节块的文字颜色和背景色,以及简单的颜色管理等功能"
   },
   "readme": {

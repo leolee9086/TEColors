@@ -4,7 +4,7 @@
 
 ## 使用帮助:
 
-帮助文档目前托管于https://publish.ccsjhn.com/?id=20240627222244-jc3u9rc
+帮助文档目前托管于https://publish.ccsjhn.com/?id=20240630182606-dbhhqoc
 
 ## 协议
 
