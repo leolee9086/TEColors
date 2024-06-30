@@ -27,7 +27,7 @@ module.exports = class TEColors extends Plugin {
     }
 }
 function 插入UI面板容器(UI容器父元素) {
-    UI容器父元素.innerHTML = `<div class="fn__flex-1 fn__flex-column"></div>`
+    UI容器父元素.innerHTML = `<div class="fn__flex-1 fn__flex-column cc_ui-container"></div>`
     return UI容器父元素.querySelector(".fn__flex-1.fn__flex-column")
 }
 async function 创建块颜色选择面板(UI容器){
