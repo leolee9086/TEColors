@@ -1,0 +1,16 @@
+[data-type="TEColorsconfig"]{
+    background: linear-gradient(to right, 
+        var(--b3-font-background1), 
+        var(--b3-font-background2), 
+        var(--b3-font-background3), 
+        var(--b3-font-background4), 
+        var(--b3-font-background5), 
+        var(--b3-font-background6), 
+        var(--b3-font-background7), 
+        var(--b3-font-background8), 
+        var(--b3-font-background9), 
+        var(--b3-font-background10), 
+        var(--b3-font-background11), 
+        var(--b3-font-background12), 
+        var(--b3-font-background13));
+}
