@@ -4,12 +4,15 @@ module.exports = class TEColors extends Plugin {
     onload() {
         this.添加颜色选择边栏()
         this.添加图片颜色识别菜单()
+        console.log(JSON.parse(localStorage.getItem('customColorPlattes')) )
         this.data = {
             recentColors :[],
             customColors : [`color:none,backgroundColor:none`],    
-            blockColors:[]    
+            blockColors:[],
+            customColorPlattes:JSON.parse(localStorage.getItem('customColorPlattes'))?JSON.parse(localStorage.getItem('customColorPlattes'))._value : [],
+            lastActivedPlatte:null
         }
-         import('/plugins/TEColors/source/UI/utils/openImageColorPlatte.js')
+        import('/plugins/TEColors/source/UI/utils/openImageColorPlatte.js')
 
     }
     添加图片颜色识别菜单() {

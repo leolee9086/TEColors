@@ -3,8 +3,19 @@
         <img :src="imgElement.src"
             style="height:100%; width: auto; object-fit: contain; object-position: center;"></img>
     </div>
-    color-thief
-
+    <div class="fn__flex">
+        <span class="color__square ariaLabel" aria-label="添加到自定义色板\n右键追加到当前自定义色板\n不可追加到只读色板"
+            @click="添加到自定义色板(dominantColor)" @click.right="追加到自定义色板(dominantColor)">
+            <svg data-v-a2a87142="" style="width: 1em; height: 1em;">
+                <use data-v-a2a87142="" xlink:href="#iconAdd"></use>
+            </svg>
+        </span>
+        <span>
+            color-thief
+        </span>
+        <div class="fn__space"></div>
+       
+    </div>
     <div class="grid__container cf"
         @click.stop="(event) => !event.ctrlKey && 应用颜色到当前块(['backgroundColor'], true, saveToRecent)(event)"
         @click.ctrl.stop="(event) => 计算前景并应用到当前块背景色(event)"
@@ -16,8 +27,19 @@
         </template>
 
     </div>
-    kMeans-cosineSimilarityWithLightnessFix
-
+    <div class="fn__flex">
+        <span class="color__square ariaLabel" aria-label="添加到自定义色板\n右键追加到当前自定义色板\n不可追加到只读色板"
+            @click="添加到自定义色板(dominantColor3)" @click.right="追加到自定义色板(dominantColor3)">
+            <svg data-v-a2a87142="" style="width: 1em; height: 1em;">
+                <use data-v-a2a87142="" xlink:href="#iconAdd"></use>
+            </svg>
+        </span>
+        <span>
+            kMeans-cosineSimilarityWithLightnessFix
+        </span>
+        <div class="fn__space"></div>
+        
+    </div>
     <div class="grid__container km"
         @click.stop="(event) => !event.ctrlKey && 应用颜色到当前块(['backgroundColor'], true, saveToRecent)(event)"
         @click.ctrl.stop="(event) => 计算前景并应用到当前块背景色(event)"
@@ -29,7 +51,19 @@
         </template>
 
     </div>
-    kMeans-euclideanDistance
+    <div class="fn__flex">
+        <span class="color__square ariaLabel" aria-label="添加到自定义色板\n右键追加到当前自定义色板\n不可追加到只读色板"
+            @click="添加到自定义色板(dominantColor1)" @click.right="追加到自定义色板(dominantColor1)">
+            <svg data-v-a2a87142="" style="width: 1em; height: 1em;">
+                <use data-v-a2a87142="" xlink:href="#iconAdd"></use>
+            </svg>
+        </span>
+        <span>
+            kMeans-euclideanDistance
+        </span>
+        <div class="fn__space"></div>
+   
+    </div>
 
     <div class="grid__container km"
         @click.stop="(event) => !event.ctrlKey && 应用颜色到当前块(['backgroundColor'], true, saveToRecent)(event)"
@@ -42,21 +76,43 @@
         </template>
 
     </div>
-    kMeans-euclideanDistanceHSV
+    <div class="fn__flex">
+        <span class="color__square ariaLabel" aria-label="添加到自定义色板\n右键追加到当前自定义色板\n不可追加到只读色板"
+            @click="添加到自定义色板(dominantColor4)" @click.right="追加到自定义色板(dominantColor4)">
+            <svg data-v-a2a87142="" style="width: 1em; height: 1em;">
+                <use data-v-a2a87142="" xlink:href="#iconAdd"></use>
+            </svg>
+        </span>
+        <span>
+            kMeans-euclideanDistanceHSV
+        </span>
+        <div class="fn__space"></div>
+       
+    </div>
+    <div class="grid__container km"
+        @click.stop="(event) => !event.ctrlKey && 应用颜色到当前块(['backgroundColor'], true, saveToRecent)(event)"
+        @click.ctrl.stop="(event) => 计算前景并应用到当前块背景色(event)"
+        @click.right.stop="(event) => !event.ctrlKey && 应用到当前块文字色(event)"
+        @click.right.ctrl.stop="(event) => 计算背景并应用到当前块文字色(event)">
+        <template v-for="(data, i) in dominantColor4">
+            <button v-if="data" class="color__square ariaLabel" :aria-label="data + 提示文本"
+                :style="{ backgroundColor: `rgb(${data[0]},${data[1]},${data[2]})` }"></button>
+        </template>
 
-<div class="grid__container km"
-    @click.stop="(event) => !event.ctrlKey && 应用颜色到当前块(['backgroundColor'], true, saveToRecent)(event)"
-    @click.ctrl.stop="(event) => 计算前景并应用到当前块背景色(event)"
-    @click.right.stop="(event) => !event.ctrlKey && 应用到当前块文字色(event)"
-    @click.right.ctrl.stop="(event) => 计算背景并应用到当前块文字色(event)">
-    <template v-for="(data, i) in dominantColor4">
-        <button v-if="data" class="color__square ariaLabel" :aria-label="data + 提示文本"
-            :style="{ backgroundColor: `rgb(${data[0]},${data[1]},${data[2]})` }"></button>
-    </template>
-
-</div>
-    MMCQ
-
+    </div>
+    <div class="fn__flex">
+        <span class="color__square ariaLabel" aria-label="添加到自定义色板\n右键追加到当前自定义色板\n不可追加到只读色板"
+            @click="添加到自定义色板(dominantColor2)" @click.right="追加到自定义色板(dominantColor2)">
+            <svg data-v-a2a87142="" style="width: 1em; height: 1em;">
+                <use data-v-a2a87142="" xlink:href="#iconAdd"></use>
+            </svg>
+        </span>
+        <span>
+            MMCQ
+        </span>
+        <div class="fn__space"></div>
+       
+    </div>
     <div class="grid__container mmcq"
         @click.stop="(event) => !event.ctrlKey && 应用颜色到当前块(['backgroundColor'], true, saveToRecent)(event)"
         @click.ctrl.stop="(event) => 计算前景并应用到当前块背景色(event)"
@@ -64,11 +120,11 @@
         @click.right.ctrl.stop="(event) => 计算背景并应用到当前块文字色(event)">
         <template v-for="(data, i) in dominantColor2">
             <button v-if="data" class="color__square ariaLabel" :aria-label="data + 提示文本"
-                :style="{ backgroundColor: data }"></button>
+                :style="{ backgroundColor: `rgb(${data[0]},${data[1]},${data[2]})` }"></button>
         </template>
 
     </div>
- 
+
 </template>
 <script setup>
 import { inject, ref } from 'vue';
@@ -94,7 +150,7 @@ const dominantColor1 = ref([])
 const dominantColor2 = ref([]);
 const dominantColor3 = ref([])
 const dominantColor4 = ref([]);
-(()=>{
+(() => {
     processImage(euclideanDistanceHSV, dominantColor4, 13)
 
 })()
@@ -118,13 +174,20 @@ function euclideanDistanceHSV(a, b) {
         algorithm: 8,
         useWebAssembly: false,
     })
-    dominantColor2.value = colors.map(item => item.rgb)
+    dominantColor2.value = colors.map(item => item.rgb.replace('rgb(','').replace(')','').split(',').map(item=>parseInt(item)))
 })()
 
 processImage(euclideanDistance, dominantColor1, 13)
 
 processImage(cosineDistanceWithLighten, dominantColor3, 13)
-
+function 添加到自定义色板(data) {
+    console.log(data)
+    plugin.reactiveData.customColorPlattes.value.push({ name: "未命名", data: data.map(item => { return { rgb: item } }), id: Lute.NewNodeID() })
+}
+function 追加到自定义色板(data) {
+    let target = plugin.reactiveData.customColorPlattes.value[plugin.reactiveData.lastActivedPlatte.value]
+    target ? target.data = target.data.concat(data.map(item => { return { rgb: item } })) : null
+}
 /*
 这里调用gpt4o实现不稳定
 使用指定算法提取图像颜色(imgElement, 'gpt4o', 13, (result) => {

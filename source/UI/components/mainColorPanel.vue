@@ -70,8 +70,8 @@
             </template>
 
         </panelFloatAble>
-        <panel>
-            <template v-slot:title>
+        <panelFloatAble :component="themeColorCombinationButtons">
+            <template v-slot:title >
                 <div class="block__icons">
                     <div class="block__logo" data-type="">
 
@@ -79,19 +79,8 @@
                     主题颜色排列组合
                 </div>
             </template>
-            <template v-slot:content>
-                <template v-for="bgIndex in 13">
-                    <div class="fn__flex"
-                        @click.stop="(event) => 应用颜色到当前块(['backgroundColor', 'color'], true, saveToRecent)(event)">
-                        <button class="color__square" v-for="colorIndex in 13" :key="`bg${bgIndex}-color${colorIndex}`"
-                            :style="{
-            backgroundColor: `var(--b3-font-background${bgIndex})`,
-            color: `var(--b3-font-color${colorIndex})`
-        }">A</button>
-                    </div>
-                </template>
-            </template>
-        </panel>
+      
+        </panelFloatAble>
         <panel @update:panelVisibility="createPanel">
             <template v-slot:title>
                 <div class="block__icons">
@@ -162,9 +151,7 @@
             <template v-slot:title>
                 <div class="block__icons">
                     <div class="block__logo" data-type="TEColorsconfig">
-                        <svg class="block__logoicon ">
-                            <use xlink:href="#iconHistory"></use>
-                        </svg>
+                        
                     </div>
                     笔记中
                 </div>
@@ -186,9 +173,6 @@
             <template v-slot:title>
                 <div class="block__icons">
                     <div class="block__logo" data-type="TEColorsconfig">
-                        <svg class="block__logoicon ">
-                            <use xlink:href="#iconHistory"></use>
-                        </svg>
                     </div>
                     最近使用
                 </div>
@@ -198,9 +182,7 @@
             <template v-slot:title>
                 <div class="block__icons">
                     <div class="block__logo" data-type="TEColorsconfig">
-                        <svg class="block__logoicon ">
-                            <use xlink:href="#iconHistory"></use>
-                        </svg>
+                      
                     </div>
                     色板
                 </div>
@@ -211,12 +193,14 @@
 <script setup>
 import { 应用颜色到当前块 } from '../../utils/DOM/blockStyle.js'
 import { kernelApi, plugin } from 'runtime'
+import {verticalScrollFirst,horizontalScroll} from '../utils/scroll.js'
 import deleteButtons from "./buttons/deleteButtons.vue";
 import themeBackGroundColorButtons from './buttons/themeBackGroundColorButtons.vue';
 import themeFontColorButtons from './buttons/themeFontColorButtons.vue';
 import recentUsedButtons from './buttons/recentUsedButtons.vue';
 import colorSeriaButtons from './buttons/colorSeriaButtons.vue';
-
+import themeColorCombinationButtons from './buttons/themeColorCombinationButtons.vue';
+console.log(themeColorCombinationButtons)
 import panel from './common/panel.vue'
 import panelFloatAble from './common/panelFloatAble.vue'
 import { ref, computed, onMounted } from 'vue'
@@ -230,12 +214,6 @@ const pickrContainer = ref('null')
 const buttonBackgroundColor = ref('null')
 const buttonColor = ref('null')
 const tempButton = ref('null')
-function horizontalScroll(event) {
-    if (event.deltaY !== 0) {
-        event.currentTarget.scrollLeft += event.deltaY + event.deltaX;
-        event.preventDefault();
-    }
-}
 function addCustomColors() {
     customColors.value.push(`color:${foregroundColor.value};background-color:${backgroundColor.value}`)
 }
