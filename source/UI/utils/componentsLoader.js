@@ -10,6 +10,8 @@ const moduleCache = {
     pickr
 }
 let watched = {}
+let { ref, reactive } = Vue
+
 export const initVueApp = (appURL, name, mixinOptions = {}, directory, data) => {
     const asyncModules = {}
     const styleElements = []
@@ -60,11 +62,15 @@ export const initVueApp = (appURL, name, mixinOptions = {}, directory, data) => 
             let obj = { ...options, ...mixinOptions }
             obj.moduleCache = { ...moduleCache }
             let componentsCache = {}
-            componentsCache[name] = Vue.defineAsyncComponent(() => loadModule(appURL, obj))
+            componentsCache[name] = appURL.render?appURL:Vue.defineAsyncComponent(() => loadModule(appURL, obj))
             let app = Vue.createApp({
                 components: componentsCache,
-                template: `<${name}></${name}>`
-            }, data)
+                template: `<${name}></${name}>`,
+                setup() {
+                    const dataReactive = reactive(data);
+                    app.provide('appData', dataReactive);
+                }
+            }, )
             if (window.require && directory) {
                 watched[directory] = true
                 let _mount = app.mount

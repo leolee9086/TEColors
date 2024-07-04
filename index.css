@@ -3,7 +3,8 @@
     display: none !important;
 }
 .pickr__fullWidth>.pcr-app{
-    width:90% !important
+    width:90% !important;
+    z-index: auto;
 }
 [data-type="TEColorsconfig"]{
     background: linear-gradient(to right, 
@@ -37,4 +38,12 @@ div.fn__hr::after {
     width: calc(100% - 1px);
     left: 0;
     top: 13px;
+}
+.cc-dialog__close{
+    cursor: pointer;
+    width: 18px;
+    height:18px;
+    opacity: .68;
+    color: var(--b3-theme-on-surface);
+    padding-right: 2px;
 }
