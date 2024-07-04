@@ -9,6 +9,8 @@ module.exports = class TEColors extends Plugin {
             customColors : [`color:none,backgroundColor:none`],    
             blockColors:[]    
         }
+         import('/plugins/TEColors/source/UI/utils/openImageColorPlatte.js')
+
     }
     添加图片颜色识别菜单() {
         this.eventBus.on(
@@ -59,6 +61,5 @@ async function 创建块颜色选择面板(UI容器) {
     const vue组件加载器 = await import('/plugins/TEColors/source/UI/Utils/componentsLoader.js')
     const 颜色管理器主面板 = await vue组件加载器.initVueApp("/plugins/TEColors/source/UI/components/mainColorPanel.vue")
     颜色管理器主面板.mount(UI容器);
-    (await import('/plugins/TEColors/source/UI/utils/openImageColorPlatte.js'))
 
 }
