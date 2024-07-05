@@ -1,200 +1,152 @@
 <template>
     <div style="height:90%; display: flex; align-items: center; justify-content: center;">
-        <img :src="imgElement.src"
-            style="height:100%; width: auto; object-fit: contain; object-position: center;"></img>
+        <img ref="imgElement" class="ariaLabel" :aria-label="提示文本" @click="processAll(maxColorsCount)"
+            @dblclick="调整取色值大小" @click.right="上传图片"         @drop.prevent="拖拽上传图片"
+        @dragover.prevent
+
+            style="height:100%; width: auto; object-fit: contain; object-position: center;">
+        </img>
     </div>
-    <div class="fn__flex">
-        <span class="color__square ariaLabel" aria-label="添加到自定义色板\n右键追加到当前自定义色板\n不可追加到只读色板"
-            @click="添加到自定义色板(dominantColor)" @click.right="追加到自定义色板(dominantColor)">
-            <svg data-v-a2a87142="" style="width: 1em; height: 1em;">
-                <use data-v-a2a87142="" xlink:href="#iconAdd"></use>
-            </svg>
-        </span>
-        <span>
+    <analysResults :dominantColor="dominantColor" :imgElement="imgElement">
+        <template v-slot:title>
             color-thief
-        </span>
-        <div class="fn__space"></div>
-       
-    </div>
-    <div class="grid__container cf"
-        @click.stop="(event) => !event.ctrlKey && 应用颜色到当前块(['backgroundColor'], true, saveToRecent)(event)"
-        @click.ctrl.stop="(event) => 计算前景并应用到当前块背景色(event)"
-        @click.right.stop="(event) => !event.ctrlKey && 应用到当前块文字色(event)"
-        @click.right.ctrl.stop="(event) => 计算背景并应用到当前块文字色(event)">
-        <template v-for="(data, i) in dominantColor">
-            <button class="color__square ariaLabel" :aria-label="data + 提示文本"
-                :style="{ backgroundColor: `rgb(${data[0]},${data[1]},${data[2]})` }"></button>
         </template>
-
-    </div>
-    <div class="fn__flex">
-        <span class="color__square ariaLabel" aria-label="添加到自定义色板\n右键追加到当前自定义色板\n不可追加到只读色板"
-            @click="添加到自定义色板(dominantColor3)" @click.right="追加到自定义色板(dominantColor3)">
-            <svg data-v-a2a87142="" style="width: 1em; height: 1em;">
-                <use data-v-a2a87142="" xlink:href="#iconAdd"></use>
-            </svg>
-        </span>
-        <span>
+    </analysResults>
+    <analysResults :dominantColor="dominantColor3" :imgElement="imgElement">
+        <template v-slot:title>
             kMeans-cosineSimilarityWithLightnessFix
-        </span>
-        <div class="fn__space"></div>
-        
-    </div>
-    <div class="grid__container km"
-        @click.stop="(event) => !event.ctrlKey && 应用颜色到当前块(['backgroundColor'], true, saveToRecent)(event)"
-        @click.ctrl.stop="(event) => 计算前景并应用到当前块背景色(event)"
-        @click.right.stop="(event) => !event.ctrlKey && 应用到当前块文字色(event)"
-        @click.right.ctrl.stop="(event) => 计算背景并应用到当前块文字色(event)">
-        <template v-for="(data, i) in dominantColor3">
-            <button v-if="data" class="color__square ariaLabel" :aria-label="data + 提示文本"
-                :style="{ backgroundColor: `rgb(${data[0]},${data[1]},${data[2]})` }"></button>
         </template>
-
-    </div>
-    <div class="fn__flex">
-        <span class="color__square ariaLabel" aria-label="添加到自定义色板\n右键追加到当前自定义色板\n不可追加到只读色板"
-            @click="添加到自定义色板(dominantColor1)" @click.right="追加到自定义色板(dominantColor1)">
-            <svg data-v-a2a87142="" style="width: 1em; height: 1em;">
-                <use data-v-a2a87142="" xlink:href="#iconAdd"></use>
-            </svg>
-        </span>
-        <span>
+    </analysResults>
+    <analysResults :dominantColor="dominantColor1" :imgElement="imgElement">
+        <template v-slot:title>
             kMeans-euclideanDistance
-        </span>
-        <div class="fn__space"></div>
-   
-    </div>
-
-    <div class="grid__container km"
-        @click.stop="(event) => !event.ctrlKey && 应用颜色到当前块(['backgroundColor'], true, saveToRecent)(event)"
-        @click.ctrl.stop="(event) => 计算前景并应用到当前块背景色(event)"
-        @click.right.stop="(event) => !event.ctrlKey && 应用到当前块文字色(event)"
-        @click.right.ctrl.stop="(event) => 计算背景并应用到当前块文字色(event)">
-        <template v-for="(data, i) in dominantColor1">
-            <button v-if="data" class="color__square ariaLabel" :aria-label="data + 提示文本"
-                :style="{ backgroundColor: `rgb(${data[0]},${data[1]},${data[2]})` }"></button>
         </template>
+    </analysResults>
 
-    </div>
-    <div class="fn__flex">
-        <span class="color__square ariaLabel" aria-label="添加到自定义色板\n右键追加到当前自定义色板\n不可追加到只读色板"
-            @click="添加到自定义色板(dominantColor4)" @click.right="追加到自定义色板(dominantColor4)">
-            <svg data-v-a2a87142="" style="width: 1em; height: 1em;">
-                <use data-v-a2a87142="" xlink:href="#iconAdd"></use>
-            </svg>
-        </span>
-        <span>
+    <analysResults :dominantColor="dominantColor4" :imgElement="imgElement">
+        <template v-slot:title>
             kMeans-euclideanDistanceHSV
-        </span>
-        <div class="fn__space"></div>
-       
-    </div>
-    <div class="grid__container km"
-        @click.stop="(event) => !event.ctrlKey && 应用颜色到当前块(['backgroundColor'], true, saveToRecent)(event)"
-        @click.ctrl.stop="(event) => 计算前景并应用到当前块背景色(event)"
-        @click.right.stop="(event) => !event.ctrlKey && 应用到当前块文字色(event)"
-        @click.right.ctrl.stop="(event) => 计算背景并应用到当前块文字色(event)">
-        <template v-for="(data, i) in dominantColor4">
-            <button v-if="data" class="color__square ariaLabel" :aria-label="data + 提示文本"
-                :style="{ backgroundColor: `rgb(${data[0]},${data[1]},${data[2]})` }"></button>
         </template>
-
-    </div>
-    <div class="fn__flex">
-        <span class="color__square ariaLabel" aria-label="添加到自定义色板\n右键追加到当前自定义色板\n不可追加到只读色板"
-            @click="添加到自定义色板(dominantColor2)" @click.right="追加到自定义色板(dominantColor2)">
-            <svg data-v-a2a87142="" style="width: 1em; height: 1em;">
-                <use data-v-a2a87142="" xlink:href="#iconAdd"></use>
-            </svg>
-        </span>
-        <span>
+    </analysResults>
+    <analysResults :dominantColor="dominantColor2" :imgElement="imgElement">
+        <template v-slot:title>
             MMCQ
-        </span>
-        <div class="fn__space"></div>
-       
-    </div>
-    <div class="grid__container mmcq"
-        @click.stop="(event) => !event.ctrlKey && 应用颜色到当前块(['backgroundColor'], true, saveToRecent)(event)"
-        @click.ctrl.stop="(event) => 计算前景并应用到当前块背景色(event)"
-        @click.right.stop="(event) => !event.ctrlKey && 应用到当前块文字色(event)"
-        @click.right.ctrl.stop="(event) => 计算背景并应用到当前块文字色(event)">
-        <template v-for="(data, i) in dominantColor2">
-            <button v-if="data" class="color__square ariaLabel" :aria-label="data + 提示文本"
-                :style="{ backgroundColor: `rgb(${data[0]},${data[1]},${data[2]})` }"></button>
         </template>
-
-    </div>
-
+    </analysResults>
 </template>
 <script setup>
-import { inject, ref } from 'vue';
+import { inject, ref, onMounted } from 'vue';
+import { plugin } from 'runtime'
 import CT from '/plugins/TEColors/static/color-thief.js'
 import { mmcq } from '/plugins/TEColors/static/mmcq.js'
-import { plugin } from 'runtime'
 import { 使用指定算法提取图像颜色 } from '../../utils/image/colorAnalyzer.js'
-import { 应用颜色到当前块, 计算背景并应用到当前块文字色, 计算前景并应用到当前块背景色, 应用到当前块文字色 } from '../../utils/DOM/blockStyle.js'
 import _chroma from '../../../static/chroma-js.js';
+import analysResults from './imageColorPanel/analysResults.vue';
+import { clientApi } from '../../asyncModules.js';
 const chroma = _chroma.default
-const 提示文本 = ref(
-    '\n左键背景,右键前景\n按住crtl自动计算'
-)
-function saveToRecent(css) {
-    plugin.reactiveData.recentColors.value.push(css)
-}
 const appData = inject('appData')
-const { imgElement } = appData
-const colorThief = new CT.default()
-const dominantColor = ref(colorThief.getPalette(imgElement, 13));
-const dominantColor1 = ref([])
+const imgElement = ref(null)
+onMounted(
+    () => {
+        imgElement.value.src = appData.imgElement.src
+        imgElement.value.onload = () => {
+            processAll(maxColorsCount.value)
+        }
+    }
 
+)
+
+function 上传图片(event) {
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = 'image/*';
+    fileInput.onchange = e => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.onload = e => {
+            imgElement.value.src = e.target.result;
+            imgElement.value.onload = () => {
+                processAll(maxColorsCount.value)
+            }
+        };
+        reader.readAsDataURL(file);
+    };
+    fileInput.click();
+}
+function 拖拽上传图片(event) {
+    const files = event.dataTransfer.files;
+    if (files.length > 0) {
+        const file = files[0];
+        const reader = new FileReader();
+        reader.onload = e => {
+            imgElement.value.src = e.target.result;
+            imgElement.value.onload = () => {
+                processAll(maxColorsCount.value)
+            }
+        };
+        reader.readAsDataURL(file);
+    }
+}
+
+const colorThief = new CT.default()
+const dominantColor = ref([]);
+const dominantColor1 = ref([])
 const dominantColor2 = ref([]);
 const dominantColor3 = ref([])
 const dominantColor4 = ref([]);
-(() => {
-    processImage(euclideanDistanceHSV, dominantColor4, 13)
+const maxColorsCount = ref(plugin.reactiveData.maxImageColorResult.value)
+const 提示文本 = ref(
+    `双击调整最大取色大小\n单击重新计算\n拖拽上传图片\n右键点击打开新的图片`
+)
+function 调整取色值大小() {
+    clientApi.confirm(
+        "请输入取色数量",
+        '<input class="b3-text-field fn__flex-center fn__size200" type="number" step="1" min="1" max="13" id="apiMaxContexts" value="7">',
+        (dialog) => {
+            maxColorsCount.value = parseInt(dialog.element.querySelector('input').value)
+            processAll(maxColorsCount.value)
+        }
+    )
+}
+function processAll(number) {
+    console.log(number)
+    processImage(euclideanDistanceHSV, dominantColor4, number)
+    processImage(euclideanDistance, dominantColor1, number)
+    processImage(cosineDistanceWithLighten, dominantColor3, number)
+    dominantColor.value = colorThief.getPalette(imgElement.value, number)
+    mmcqAnalys(number)
+}
 
-})()
+
 function euclideanDistanceHSV(a, b) {
-    const colorA = chroma(a).hsv();
-    const colorB = chroma(b).hsv();
+
+    let _a = a ? [a[0], a[1], a[2]] : [0, 0, 0]
+    let _b = b ? [b[0], b[1], b[2]] : [0, 0, 0]
+    const colorA = chroma(_a).hsv();
+    const colorB = chroma(_b).hsv();
     return Math.sqrt(colorA.reduce((sum, val, i) => sum + (val - colorB[i]) ** 2, 0));
 }
-(async () => {
+async function mmcqAnalys(number) {
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
-    let width = imgElement.naturalWidth;
-    let height = imgElement.naturalHeight;
+    let width = imgElement.value.naturalWidth;
+    let height = imgElement.value.naturalHeight;
     canvas.width = width;
     canvas.height = height;
     canvas.style.display = 'none'
-    ctx.drawImage(imgElement, 0, 0, width, height);
+    ctx.drawImage(imgElement.value, 0, 0, width, height);
     const data = ctx.getImageData(0, 0, width, height)
-    const colors = await mmcq(data.data, {
-        count: 13,
-        algorithm: 8,
-        useWebAssembly: false,
-    })
-    dominantColor2.value = colors.map(item => item.rgb.replace('rgb(','').replace(')','').split(',').map(item=>parseInt(item)))
-})()
+    let colors = await mmcq(data.data, { count: number })
+    dominantColor2.value = []
 
-processImage(euclideanDistance, dominantColor1, 13)
-
-processImage(cosineDistanceWithLighten, dominantColor3, 13)
-function 添加到自定义色板(data) {
-    console.log(data)
-    plugin.reactiveData.customColorPlattes.value.push({ name: "未命名", data: data.map(item => { return { rgb: item } }), id: Lute.NewNodeID() })
+    colors.map(item => [item.r, item.g, item.b]).forEach(
+        item => {
+            dominantColor2.value.push(item)
+        }
+    )
 }
-function 追加到自定义色板(data) {
-    let target = plugin.reactiveData.customColorPlattes.value[plugin.reactiveData.lastActivedPlatte.value]
-    target ? target.data = target.data.concat(data.map(item => { return { rgb: item } })) : null
-}
-/*
-这里调用gpt4o实现不稳定
-使用指定算法提取图像颜色(imgElement, 'gpt4o', 13, (result) => {
-    dominantColor4.value=result
-})*/
-function processImage(算法, 目标, 颜色数量) {
-    使用指定算法提取图像颜色(imgElement, 算法, 颜色数量, (clusters) => { 目标.value = clusters.centers })
+async function processImage(算法, 目标, 颜色数量) {
+    使用指定算法提取图像颜色(imgElement.value, 算法, 颜色数量, (clusters) => { 目标.value = clusters.centers })
 }
 function euclideanDistance(a, b) {
     return Math.sqrt(a.reduce((sum, val, i) => sum + (val - b[i]) ** 2, 0));

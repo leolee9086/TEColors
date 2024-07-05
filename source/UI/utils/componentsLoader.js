@@ -11,7 +11,6 @@ const moduleCache = {
 }
 let watched = {}
 let { ref, reactive } = Vue
-
 export const initVueApp = (appURL, name, mixinOptions = {}, directory, data) => {
     const asyncModules = {}
     const styleElements = []
@@ -79,9 +78,11 @@ export const initVueApp = (appURL, name, mixinOptions = {}, directory, data) => 
                     _mount.bind(app)(...args)
                 }
             }
+            app.styleElements=styleElements
             return app
         } catch (e) {
             console.warn(e)
+            oldApp.styleElements=styleElements
             return oldApp
         }
     }
@@ -99,6 +100,11 @@ export const initVueApp = (appURL, name, mixinOptions = {}, directory, data) => 
                     fs.watchFile(filePath, (curr, prev) => {
                         let currentContent = fs.readFileSync(filePath, 'utf-8');
                         if (currentContent !== previousContents[filePath]) {
+                            try{
+                                oldApp.styleElements.forEach(el=>el.remove())
+                            }catch(e){
+                                console.error(e)
+                            }
                             oldApp.unmount();
                             oldApp = f();
                             oldApp.mount(..._args);

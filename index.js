@@ -4,13 +4,14 @@ module.exports = class TEColors extends Plugin {
     onload() {
         this.添加颜色选择边栏()
         this.添加图片颜色识别菜单()
-        console.log(JSON.parse(localStorage.getItem('customColorPlattes')) )
+        console.log(JSON.parse(localStorage.getItem('customColorPlattes')))
         this.data = {
-            recentColors :[],
-            customColors : [`color:none,backgroundColor:none`],    
-            blockColors:[],
-            customColorPlattes:JSON.parse(localStorage.getItem('customColorPlattes'))?JSON.parse(localStorage.getItem('customColorPlattes'))._value : [],
-            lastActivedPlatte:null
+            recentColors: [],
+            customColors: [`color:none,backgroundColor:none`],
+            blockColors: [],
+            customColorPlattes: JSON.parse(localStorage.getItem('customColorPlattes')) ? JSON.parse(localStorage.getItem('customColorPlattes'))._value : [],
+            lastActivedPlatte: null,
+            maxImageColorResult: 5
         }
         import('/plugins/TEColors/source/UI/utils/openImageColorPlatte.js')
 
@@ -26,7 +27,32 @@ module.exports = class TEColors extends Plugin {
                         'click': async () => {
                             //包含图片元素的span
                             const imgElement = e.detail.element.querySelector('img')
-                            this.eventBus.emit('open-imageColors-palatte', imgElement                                )
+                            this.eventBus.emit('open-imageColors-palatte', imgElement)
+
+                        }
+                    }
+                )
+            }
+        )
+        this.eventBus.on(
+            'click-blockicon', (e) => {
+                console.log(e)
+                e.detail.menu.addItem(
+                    {
+                        'label': "识别图片配色",
+                        'icon': "",
+                        'click': async () => {
+                            e.detail.blockElements.forEach(
+                                item => {
+                                    //包含图片元素的span
+                                    const imgElements = item.querySelectorAll('img')
+                                    imgElements.forEach(
+                                        imgElement => this.eventBus.emit('open-imageColors-palatte', imgElement)
+
+                                    )
+
+                                }
+                            )
 
                         }
                     }

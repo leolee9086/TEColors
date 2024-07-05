@@ -13,7 +13,6 @@ async function openImagePalatte(imgElement) {
 }
 plugin.eventBus.on(
     'open-imageColors-palatte', (e) => {
-
         openImagePalatte(e.detail)
     }
 )
