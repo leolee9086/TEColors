@@ -19,6 +19,10 @@ export function 获取光标所在块元素() {
         }
         current = current.parentNode;
     }
+    try{
     return hasClosestBlock(current)
+    }catch(e){
+        return null
+    }
 }
 

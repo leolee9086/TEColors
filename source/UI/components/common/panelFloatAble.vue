@@ -1,8 +1,10 @@
 <template>
     <panel>
-        <template v-slot:title>
+        
+        <template v-slot:title @click.right.stop="!floatComponent?component && openDialog(component):floatComponent" >
             <slot name="title"></slot>
-            <div @click.stop="!floatComponent?component && openDialog(component):floatComponent" class="block__logo"><svg class="block__logoicon ">
+            <div @click.stop="!floatComponent?component && openDialog(component):floatComponent" class="block__logo">
+                <svg class="block__logoicon" style="display: inline-block;">
                     <use xlink:href="#iconHideDock"></use>
                 </svg>
             </div>

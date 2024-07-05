@@ -12,24 +12,24 @@
     </select>
     <input v-model="currentName" v-if="currentName" @change="修正名称">
     <div style="max-height:28px;height: 100%;margin:auto 2px" class="block__logo">
-      <svg class="b3-menu__icon " v-if="!currentName" @click.stop.prevent="编辑名称"
+      <svg style="display: inline-block;" class="b3-menu__icon " v-if="!currentName" @click.stop.prevent="编辑名称"
         :style="{ color: lastSelectedPlatte !== 'chinese' ? 'black' : 'grey' }">
         <use xlink:href="#iconEdit"></use>
       </svg>
-      <svg class="b3-menu__icon " v-if="!currentName" @click.stop.prevent="添加色板">
+      <svg  style="display: inline-block;" class="b3-menu__icon " v-if="!currentName" @click.stop.prevent="添加色板">
         <use xlink:href="#iconAdd"></use>
       </svg>
-      <svg class="b3-menu__icon " v-if="!currentName" @click.stop.prevent="上传色板">
+      <svg style="display: inline-block;" class="b3-menu__icon " v-if="!currentName" @click.stop.prevent="上传色板">
         <use xlink:href="#iconFolder"></use>
       </svg>
-      <svg class="b3-menu__icon " v-if="!currentName" @click.stop.prevent="下载画板">
+      <svg style="display: inline-block;" class="b3-menu__icon " v-if="!currentName" @click.stop.prevent="下载画板">
         <use xlink:href="#iconDownload"></use>
       </svg>
 
-      <svg class="b3-menu__icon " v-if="currentName" @click.stop.prevent="保存名称">
+      <svg  style="display: inline-block;" class="b3-menu__icon " v-if="currentName" @click.stop.prevent="保存名称">
         <use xlink:href="#iconUpload"></use>
       </svg>
-      <svg class="b3-menu__icon " v-if="currentName" @click.stop.prevent="删除当前画板">
+      <svg  style="display: inline-block;" class="b3-menu__icon " v-if="currentName" @click.stop.prevent="删除当前画板">
         <use xlink:href="#iconTrashcan"></use>
       </svg>
     </div>
@@ -40,7 +40,8 @@
         @click.stop="(event) => !event.ctrlKey && 应用颜色到当前块(['backgroundColor'], true, saveToRecent)(event)"
         @click.ctrl.stop="(event) => 计算前景并应用到当前块背景色(event)"
         @click.right.stop="(event) => !event.ctrlKey && 应用到当前块文字色(event)"
-        @click.right.ctrl.stop="(event) => 计算背景并应用到当前块文字色(event)" style="max-height:168px;overflow: hidden;">
+        @click.right.ctrl.stop="(event) => 计算背景并应用到当前块文字色(event)" 
+        style="max-height:168px;overflow: hidden;">
         <template v-for="(data, i) in currentPalette">
           <button v-if="data" class="color__square ariaLabel" :aria-label="data.name + 提示文本"
             :style="computedString(data)"></button>
