@@ -19,6 +19,26 @@
     </div>
     <div class="fn__hr"></div>
     <div class="fn__flex-column fn__flex-1">
+        <panelFloatAble :component="colorSeriaButtons">
+            <template v-slot:title>
+                <div class="block__icons">
+                    <div class="block__logo" data-type="TEColorsconfig">
+                      
+                    </div>
+                    色板
+                </div>
+            </template>
+        </panelFloatAble>
+        <panelFloatAble  :component="customColorPanel">
+            <template v-slot:title>
+                <div class="block__icons">
+                    <div class="block__logo" data-type="">
+
+                    </div>
+                    自定义颜色
+                </div>
+            </template>
+        </panelFloatAble>
         <panelFloatAble :component="deleteButtons">
             <template v-slot:title>
                 <div class="block__icons">
@@ -81,16 +101,7 @@
             </template>
       
         </panelFloatAble>
-        <panelFloatAble  :component="customColorPanel">
-            <template v-slot:title>
-                <div class="block__icons">
-                    <div class="block__logo" data-type="">
-
-                    </div>
-                    自定义颜色
-                </div>
-            </template>
-        </panelFloatAble>
+    
         <panel v-if="blockColors[0]">
             <template v-slot:title>
                 <div class="block__icons">
@@ -122,16 +133,7 @@
                 </div>
             </template>
         </panelFloatAble>
-        <panelFloatAble :component="colorSeriaButtons">
-            <template v-slot:title>
-                <div class="block__icons">
-                    <div class="block__logo" data-type="TEColorsconfig">
-                      
-                    </div>
-                    色板
-                </div>
-            </template>
-        </panelFloatAble>
+     
     </div>
 </template>
 <script setup>
