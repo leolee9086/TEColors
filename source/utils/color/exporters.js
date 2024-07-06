@@ -73,8 +73,8 @@ function rgbToHex(r, g, b) {
 function rgbArrayToHex(a) {
     return chroma(...a).hex();
 }
+
 async function writeDataURL(dataURL, identifier = '') {
-    // 提取 MIME 类型和编码数据
     const matches = dataURL.match(/^data:(.+?);base64,(.*)$/);
     if (!matches) {
         console.error('Invalid data URL');

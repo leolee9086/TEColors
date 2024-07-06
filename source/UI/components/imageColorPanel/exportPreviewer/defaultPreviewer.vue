@@ -1,8 +1,7 @@
 <template>
     <div clss="fn__flex fn__flex-column ">
         <div class="b3-dialog__action fn__flex-1" style="flex-direction: row-reverse;">
-            <select value="1"
-                v-model="currentPreviewerIndex"
+            <select value="1" v-model="currentPreviewerIndex"
                 @change="(e) => currentPreviewer = components[e.target.value].component ? components[e.target.value].component() : null">
                 <template v-for="(componentDefine, i) in components">
                     <option :value="i" v-if="componentDefine">{{ componentDefine.name }}</option>
@@ -12,7 +11,8 @@
             <div class="fn__space"></div>
             <button class="b3-button b3-button--text" id="confirmDialogConfirmBtn" @click="renderImage">确定渲染</button>
         </div>
-        <div clss="fn__flex fn__flex-column" style="max-height:90%;background-color: var(--b3-theme-background);" ref="_previewElement">
+        <div clss="fn__flex fn__flex-column" style="max-height:90%;background-color: var(--b3-theme-background);"
+            ref="_previewElement">
             <img v-if="!currentPreviewer" :src="appData.imageURLs[0]">
 
             <component v-if="currentPreviewer" :is="_currentPreviewer()"></component>
@@ -27,10 +27,10 @@ import fs from '../../../../polyfills/fs.js';
 import { initVueApp } from '../../../utils/componentsLoader.js';
 import { clientApi } from 'runtime';
 const _previewElement = ref(null)
-const components = ref([{name:'原始色卡'}])
+const components = ref([{ name: '原始色卡' }])
 const currentPreviewer = shallowRef(null)
 const appData = inject('appData')
-const currentPreviewerIndex=ref(0)
+const currentPreviewerIndex = ref(0)
 const _currentPreviewer = () => {
     return currentPreviewer.value
 }
@@ -49,19 +49,26 @@ const openByMobile = (uri) => {
 async function renderImage() {
     let previewElement = appData.$dialog.element.querySelector('#previewer') || _previewElement.value
     let canvas = await html2canvas(previewElement, {
-        width: previewElement.clientWidth,
-        height: previewElement.clientHeight,
-        useCORS: true
-    })
+    useCORS: true,
+    scale: 4, //按比例增加分辨率 (2=双倍).  
+        dpi: window.devicePixelRatio * 4, //设备像素比
+})
+ 
+
     canvas.toBlob((blob) => {
         try {
             const formData = new FormData();
-            formData.append("file", blob, 'colors.png');
+            formData.append("file", blob, `colors-${Date.now()}.png`);
             formData.append("type", "image/png");
             clientApi.fetchPost("/api/export/exportAsFile", formData, (response) => {
                 openByMobile(response.data.file)
             });
         } catch (e) {
+            const url = URL.createObjectURL(blob.data);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = canvases[index].fileName;
+
             console.error(e)
         }
     })
@@ -107,8 +114,8 @@ async function loadPreviewers() {
                         component: () => { return initVueApp('/plugins/TEColors/source/UI/components/imageColorPanel/exportPreviewer/exportPreviewers/' + item.name, '$component')._component.components.$component }
                     }
                 )
-                currentPreviewer.value=components.value[1].component()
-                currentPreviewerIndex.value=1
+                currentPreviewer.value = components.value[1].component()
+                currentPreviewerIndex.value = 1
             } catch (e) {
                 console.warn(e)
             }

@@ -3,6 +3,7 @@
         <img ref="imgElement" class="ariaLabel" :aria-label="提示文本" @click="processAll(maxColorsCount)"
             @dblclick="调整取色值大小" @click.right="上传图片"         @drop.prevent="拖拽上传图片"
         @dragover.prevent
+        @paste.prevent="处理粘贴图片"
 
             style="height:100%; width: auto; object-fit: contain; object-position: center;">
         </img>
@@ -87,7 +88,28 @@ function 拖拽上传图片(event) {
         reader.readAsDataURL(file);
     }
 }
-
+function 处理粘贴图片(event) {
+    const items = event.clipboardData && event.clipboardData.items;
+    let imageFile = null;
+    if (items) {
+        for (let i = 0; i < items.length; i++) {
+            if (items[i].type.indexOf("image") !== -1) {
+                imageFile = items[i].getAsFile();
+                break;
+            }
+        }
+    }
+    if (imageFile) {
+        const reader = new FileReader();
+        reader.onload = e => {
+            imgElement.value.src = e.target.result;
+            imgElement.value.onload = () => {
+                processAll(maxColorsCount.value);
+            };
+        };
+        reader.readAsDataURL(imageFile);
+    }
+}
 const colorThief = new CT.default()
 const dominantColor = ref([]);
 const dominantColor1 = ref([])
