@@ -1,6 +1,13 @@
 <template>
     <div clss="fn__flex fn__flex-column ">
+
         <div class="b3-dialog__action fn__flex-1" style="flex-direction: row-reverse;">
+            <select value="1" v-model="currentExportMethod">
+                <option value="0">使用html2canvas导出</option>
+                <option value="1">使用dom2image导出</option>
+
+            </select>
+
             <select value="1" v-model="currentPreviewerIndex"
                 @change="(e) => currentPreviewer = components[e.target.value].component ? components[e.target.value].component() : null">
                 <template v-for="(componentDefine, i) in components">
@@ -26,11 +33,14 @@ import { inject, ref, shallowRef } from 'vue'
 import fs from '../../../../polyfills/fs.js';
 import { initVueApp } from '../../../utils/componentsLoader.js';
 import { clientApi } from 'runtime';
+import _domtoimage from '../../../../../static/dom-to-image-more.js'
+const domtoimage = _domtoimage.default
 const _previewElement = ref(null)
 const components = ref([{ name: '原始色卡' }])
 const currentPreviewer = shallowRef(null)
 const appData = inject('appData')
 const currentPreviewerIndex = ref(0)
+const currentExportMethod = ref(1)
 const _currentPreviewer = () => {
     return currentPreviewer.value
 }
@@ -48,30 +58,35 @@ const openByMobile = (uri) => {
 };
 async function renderImage() {
     let previewElement = appData.$dialog.element.querySelector('#previewer') || _previewElement.value
-    let canvas = await html2canvas(previewElement, {
-    useCORS: true,
-    scale: 4, //按比例增加分辨率 (2=双倍).  
-        dpi: window.devicePixelRatio * 4, //设备像素比
-})
- 
+    if (currentExportMethod.value) {
+        domtoimage.toBlob(previewElement, {
+        }).then(saveBlob)
+    } else {
+        let canvas = await html2canvas(previewElement, {
+            useCORS: true,
+            scale: 4, //按比例增加分辨率 (2=双倍).  
+            dpi: window.devicePixelRatio * 4, //设备像素比
+        })
+        canvas.toBlob(saveBlob)
+    }
+}
+function saveBlob(blob) {
+    try {
+        const formData = new FormData();
+        formData.append("file", blob, `colors-${Date.now()}.png`);
+        formData.append("type", "image/png");
+        clientApi.fetchPost("/api/export/exportAsFile", formData, (response) => {
+            openByMobile(response.data.file)
+        });
+    } catch (e) {
+        const url = URL.createObjectURL(blob.data);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `colors-${Date.now()}.png`; // 修正下载文件名
 
-    canvas.toBlob((blob) => {
-        try {
-            const formData = new FormData();
-            formData.append("file", blob, `colors-${Date.now()}.png`);
-            formData.append("type", "image/png");
-            clientApi.fetchPost("/api/export/exportAsFile", formData, (response) => {
-                openByMobile(response.data.file)
-            });
-        } catch (e) {
-            const url = URL.createObjectURL(blob.data);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = canvases[index].fileName;
-
-            console.error(e)
-        }
-    })
+        a.click()
+        a.remove()
+    }
 }
 const addScript = (path, id) => {
     return new Promise((resolve) => {

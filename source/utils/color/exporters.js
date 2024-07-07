@@ -58,9 +58,9 @@ export function 导出色卡图片(swatchs) {
     layer.draw();
     // Convert the stage to a data URL and trigger download
     const dataURL = stage.toDataURL();
-    try{
-    writeDataURL(dataURL)
-    }catch(e){
+    try {
+        writeDataURL(dataURL)
+    } catch (e) {
         console.warn(e)
     }
     return dataURL
@@ -82,7 +82,15 @@ async function writeDataURL(dataURL, identifier = '') {
     }
     const mimeType = matches[1];
     const base64Data = matches[2];
-    const buffer = Buffer.from(base64Data, 'base64');
+
+    // 使用 atob 解码 base64 数据并转换为 Uint8Array
+    const binaryString = atob(base64Data);
+    const len = binaryString.length;
+    const bytes = new Uint8Array(len);
+    for (let i = 0; i < len; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+    }
+
     // 根据 MIME 类型确定文件扩展名
     let extension;
     switch (mimeType) {
@@ -99,6 +107,7 @@ async function writeDataURL(dataURL, identifier = '') {
             console.error('Unsupported MIME type:', mimeType);
             return;
     }
+
     // 确保目录存在
     const dirPath = '/temp/export';
     // 动态创建文件名
@@ -106,13 +115,13 @@ async function writeDataURL(dataURL, identifier = '') {
     const fileName = `swatch_image_${identifier}_${timestamp}.${extension}`;
     const filePath = path.join(dirPath, fileName);
     // 写入文件
-    fs.writeFile(filePath, buffer);
+    fs.writeFile(filePath, bytes);
 }
 export function 分组导出色卡图片(swatchs, groupSize = 5) {
     const allCombinations = combinations(swatchs, groupSize);
     let data = []
     for (const group of allCombinations) {
-       data.push(导出色卡图片(group))
+        data.push(导出色卡图片(group))
     }
     return data
 }

@@ -32,7 +32,7 @@
 </template>
 <script setup>
 import { 应用颜色到当前块, 计算背景并应用到当前块文字色, 计算前景并应用到当前块背景色, 应用到当前块文字色 } from '../../../utils/DOM/blockStyle.js';
-import {plugin,clientApi} from 'runtime'
+import {plugin,clientApi,Constants} from 'runtime'
 import {ref,defineProps,toRefs} from 'vue'
 import {导出色卡图片,分组导出色卡图片} from '../../../utils/color/exporters.js'
 import { openDialog as  openVueDialog } from '../../dialogs/index.js';
@@ -42,7 +42,7 @@ function 显示导出色卡(dominantColor,group){
         '/plugins/TEColors/source/UI/components/imageColorPanel/exportPreviewer/defaultPreviewer.vue',
         'exporter',
         {},
-        `D:/网站库/data/plugins/TEColors/source`,
+        Constants.devPath,
         {
             imageURLs:dataURLs,
             dominantColor,
@@ -59,7 +59,6 @@ const 提示文本 = ref(
     `\n左键背景,右键前景\n按住crtl自动计算`
 )
 function 添加到自定义色板(data) {
-    console.log(data)
     plugin.reactiveData.customColorPlattes.value.push({ name: "未命名", data: data.map(item => { return { rgb: item } }), id: Lute.NewNodeID() })
 }
 function 追加到自定义色板(data) {

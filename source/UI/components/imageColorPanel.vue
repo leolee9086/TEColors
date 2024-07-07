@@ -44,6 +44,8 @@ import { 使用指定算法提取图像颜色 } from '../../utils/image/colorAna
 import _chroma from '../../../static/chroma-js.js';
 import analysResults from './imageColorPanel/analysResults.vue';
 import { clientApi } from '../../asyncModules.js';
+const maxColorsCount = ref(plugin.reactiveData.maxImageColorResult.value)
+
 const chroma = _chroma.default
 const appData = inject('appData')
 const imgElement = ref(null)
@@ -116,7 +118,6 @@ const dominantColor1 = ref([])
 const dominantColor2 = ref([]);
 const dominantColor3 = ref([])
 const dominantColor4 = ref([]);
-const maxColorsCount = ref(plugin.reactiveData.maxImageColorResult.value)
 const 提示文本 = ref(
     `双击调整最大取色大小\n单击重新计算\n拖拽上传图片\n右键点击打开新的图片`
 )

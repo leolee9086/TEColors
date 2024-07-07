@@ -1,10 +1,9 @@
 const clientApi = require("siyuan")
 const { Plugin } = clientApi
 module.exports = class TEColors extends Plugin {
-    onload() {
+    async onload() {
         this.添加颜色选择边栏()
         this.添加图片颜色识别菜单()
-        console.log(JSON.parse(localStorage.getItem('customColorPlattes')))
         this.data = {
             recentColors: [],
             customColors: [`color:none,backgroundColor:none`],
@@ -13,8 +12,9 @@ module.exports = class TEColors extends Plugin {
             lastActivedPlatte: null,
             maxImageColorResult: 5
         }
+        const dataMananger= await import('/plugins/TEColors/source/Data/index.js')
+        dataMananger.createReactiveData();
         import('/plugins/TEColors/source/UI/utils/openImageColorPlatte.js')
-
     }
     添加图片颜色识别菜单() {
         this.eventBus.on(
@@ -86,9 +86,7 @@ function 插入UI面板容器(UI容器父元素) {
     return UI容器父元素.querySelector(".fn__flex-1.fn__flex-column")
 }
 async function 创建块颜色选择面板(UI容器) {
-    (await import('/plugins/TEColors/source/Data/index.js')).createReactiveData()
     const vue组件加载器 = await import('/plugins/TEColors/source/UI/Utils/componentsLoader.js')
     const 颜色管理器主面板 = await vue组件加载器.initVueApp("/plugins/TEColors/source/UI/components/mainColorPanel.vue")
     颜色管理器主面板.mount(UI容器);
-
 }
