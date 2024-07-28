@@ -1,5 +1,6 @@
 const clientApi = require("siyuan")
 const { Plugin } = clientApi
+globalThis[Symbol.for(`clientApi`)]=globalThis[Symbol.for(`clientApi`)]||clientApi
 module.exports = class TEColors extends Plugin {
     async onload() {
         this.添加颜色选择边栏()
